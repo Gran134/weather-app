@@ -1,0 +1,30 @@
+<h1>Trondheim weather</h1>
+
+<h2>Sunrise and sunset</h2>
+<table>
+  <tr><th>Date</th><th>Sunrise</th><th>Sunset</th></tr>
+  {% for day in daily %}
+  <tr>
+    <td>{{ day.date.strftime("%A, %d %B") }}</td>
+    <td>{{ day.sunrise.strftime("%H:%M") }}</td>
+    <td>{{ day.sunset.strftime("%H:%M") }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h2>Hourly forecast</h2>
+<table>
+  <tr>
+    <th>Time</th><th>Feels like</th><th>Cloud</th>
+    <th>Wind</th><th>Rain</th>
+  </tr>
+  {% for hour in hourly %}
+  <tr>
+    <td>{{ hour.date.strftime("%a %H:%M") }}</td>
+    <td>{{ "%.1f"|format(hour.temperature_2m) }} °C</td>
+    <td>{{ hour.cloud_cover }}%</td>
+    <td>{{ "%.1f"|format(hour.wind_speed_10m) }} km/h</td>
+    <td>{{ hour.rain }} mm</td>
+  </tr>
+  {% endfor %}
+</table>
