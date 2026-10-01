@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    padding: 32px 16px;
+    background: #f3f6fa;
+    color: #1f2937;
+}
+
+.weather-page {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.weather-section {
+    margin-top: 40px;
+}
+
+.weather-card {
+    margin: 16px 0;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+}
+
+.weather-card p {
+    margin: 8px;
+}
+
+.page-footer {
+    Height: 250px;
+    width: 100%;
+    background-color: #87ceeb;
+    margin: 0 auto;
+}
+
+.foot {
+    max-width: 900px;
+    margin: 0 auto;
+    padding-top: 40px;
+}

@@ -1,30 +1,65 @@
 <h1>Trondheim weather</h1>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <main class="weather-page">
+    <header class="page-header">
+      <h1>Trondheim</h1>
+    </header>
 
-<h2>Sunrise and sunset</h2>
-<table>
-  <tr><th>Date</th><th>Sunrise</th><th>Sunset</th></tr>
-  {% for day in daily %}
-  <tr>
-    <td>{{ day.date.strftime("%A, %d %B") }}</td>
-    <td>{{ day.sunrise.strftime("%H:%M") }}</td>
-    <td>{{ day.sunset.strftime("%H:%M") }}</td>
-  </tr>
-  {% endfor %}
-</table>
+    <section class="weather-section">
+      <h2>Sunrise and Sunset</h2>
+      <div class="daily-grid">
+        {% for day in daily %}
+          <div id="dropdownButton" type="button">
+            <article class="weather-card">
+              <h3>{{ day.date.strftime("%A") }}</h3>
+              <p class="date">{{ day.date.strftime("%d %B") }}</p>
+              <p>Sunrise <strong>{{ day.sunrise.strftime("%H:%M") }}</strong></p>
+              <p>Sunset <strong>{{ day.sunset.strftime("%H:%M") }}</strong></p>
+            </article>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
 
-<h2>Hourly forecast</h2>
-<table>
-  <tr>
-    <th>Time</th><th>Feels like</th><th>Cloud</th>
-    <th>Wind</th><th>Rain</th>
-  </tr>
-  {% for hour in hourly %}
-  <tr>
-    <td>{{ hour.date.strftime("%a %H:%M") }}</td>
-    <td>{{ "%.1f"|format(hour.temperature_2m) }} °C</td>
-    <td>{{ hour.cloud_cover }}%</td>
-    <td>{{ "%.1f"|format(hour.wind_speed_10m) }} km/h</td>
-    <td>{{ hour.rain }} mm</td>
-  </tr>
-  {% endfor %}
-</table>
+    <section class="weather-sectoin">
+      <h2>Hourly forcast</h2>
+      <div class="hourly-grid">
+        {% for hour in hourly[:24] %}
+          <article class="hourly-grid">
+            <h3>{{ hour.date.strftime("%H:%M") }}</h3>
+            <p class="temperature">
+              {{ "%.1f"|format(hour.temperature_2m) }} °C
+            </p>
+            <p>Cloud cover: {{ "%.0f"|format(hour.cloud_cover) }}%</p>
+            <p>Wind: {{ "%.1f"|format(hour.wind_speed_10m) }} km/h</p>
+            <p>Rain: {{ "%.1f"|format(hour.rain) }} mm</p>
+          </article>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+  <footer class="page-footer">
+    <div class="foot">
+      Weather data from
+      <a href="https://open-meteo.com/" target="_blank" rel="noopener">
+      Open-meteo
+      </a>
+    </div>
+  </footer>
+</body>
+<script>
+  const button = document.getElementById("dropdownButton");
+  const menu = document.getElementById("dropdownMenu");
+
+  button.addEventListener("click", () => {
+    const isOpen = button.getAttribute("aria-expanded") === "true";
+    button.setAttribute("aria-expanded", String(!isOpen));
+    menu.hidden = isOpen;
+  });
+</script>
+</html>
